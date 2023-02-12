@@ -13,6 +13,7 @@ use Yii;
  * @property string|null $m_uhomepage
  * @property string $m_uagent
  * @property string $m_uip
+ * @property string $m_created_at
  * @property string|null $m_text
  * @property int $m_status
  */
@@ -32,6 +33,8 @@ class Message extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['m_uname', 'm_uemail', 'm_text', 'm_created_at', 'm_uagent', 'm_uip'], 'required'],
+            [['m_created_at'], 'safe'],
             [['m_text'], 'string'],
             [['m_status'], 'integer'],
             [['m_uname'], 'string', 'max' => 32],
@@ -48,13 +51,14 @@ class Message extends \yii\db\ActiveRecord
     {
         return [
             'm_id' => 'M ID',
-            'm_uname' => 'User Name',
-            'm_uemail' => 'E-mail',
-            'm_uhomepage' => 'Homepage',
-            'm_uagent' => 'User agent',
-            'm_uip' => 'User ip',
-            'm_text' => 'Text',
-            'm_status' => 'Статус',
+            'm_uname' => 'M Uname',
+            'm_uemail' => 'M Uemail',
+            'm_uhomepage' => 'M Uhomepage',
+            'm_uagent' => 'M Uagent',
+            'm_uip' => 'M Uip',
+            'm_created_at' => 'M Created At',
+            'm_text' => 'M Text',
+            'm_status' => 'M Status',
         ];
     }
 }
