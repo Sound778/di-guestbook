@@ -26,7 +26,7 @@ class m230212_182020_change_message_table extends Migration
 
         return false;
         */
-        $this->addColumn('message', 'm_uid', $this->integer()->unsigned()->notNull()->defaultValue(0)->after('m_uemail'));
+        $this->dropColumn('message', 'm_uid');
     }
 
     /*

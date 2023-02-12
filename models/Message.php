@@ -10,11 +10,12 @@ use Yii;
  * @property int $m_id
  * @property string $m_uname
  * @property string $m_uemail
+ * @property int $m_uid
  * @property string|null $m_uhomepage
  * @property string $m_uagent
  * @property string $m_uip
  * @property string $m_created_at
- * @property string|null $m_text
+ * @property string $m_text
  * @property int $m_status
  */
 class Message extends \yii\db\ActiveRecord
@@ -33,10 +34,10 @@ class Message extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['m_uname', 'm_uemail', 'm_text', 'm_created_at', 'm_uagent', 'm_uip'], 'required'],
+            [['m_uid', 'm_status'], 'integer'],
+            [['m_uname', 'm_uemail', 'm_created_at', 'm_text'], 'required'],
             [['m_created_at'], 'safe'],
             [['m_text'], 'string'],
-            [['m_status'], 'integer'],
             [['m_uname'], 'string', 'max' => 32],
             [['m_uemail', 'm_uhomepage'], 'string', 'max' => 64],
             [['m_uagent'], 'string', 'max' => 255],
@@ -53,6 +54,7 @@ class Message extends \yii\db\ActiveRecord
             'm_id' => 'M ID',
             'm_uname' => 'M Uname',
             'm_uemail' => 'M Uemail',
+            'm_uid' => 'M Uid',
             'm_uhomepage' => 'M Uhomepage',
             'm_uagent' => 'M Uagent',
             'm_uip' => 'M Uip',
