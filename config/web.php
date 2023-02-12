@@ -10,6 +10,10 @@ $config = [
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
+        '@messages' => '/message/index',
+        '@signin' => '/site/login',
+        '@signup' => '/site/register',
+        '@signout' => '/site/logout',
     ],
     'components' => [
         'request' => [

@@ -4,11 +4,12 @@
 /** @var string $content */
 
 use app\assets\TestAppAsset;
-use app\widgets\Alert;
-use yii\bootstrap5\Breadcrumbs;
+//use app\widgets\Alert;
+use yii\helpers\Url;
+//use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
-use yii\bootstrap5\Nav;
-use yii\bootstrap5\NavBar;
+//use yii\bootstrap5\Nav;
+//use yii\bootstrap5\NavBar;
 
 TestAppAsset::register($this);
 
@@ -31,22 +32,23 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 
 <div class="left-side dark">
     <div class="left-side__home">
-        <a href="/">GUESTBOOK</a>
+        <a href="<?= Yii::$app->homeUrl ?>">GUESTBOOK</a>
     </div>
     <div class="color-medium" id="left-side__logged">
         <?php
         echo (Yii::$app->user->isGuest)
-        ? '<a href="/site/login">Вход</a> / <a href="#">Регистрация</a>'
+        ? '<a href="' . Url::to(['@signin']) . '">Вход</a> / <a href="' . Url::to(['@signup']) . '">Регистрация</a>'
         : Yii::$app->user->identity->username;
         ?>
     </div>
     <ul id="sidebar">
-        <li><a href="/site/messages">Сообщения</a></li>
-        <li><a href="/site/extra">Что-то еще</a></li>
+        <li><a href="<?= Url::to(['@messages']) ?>">Сообщения</a></li>
+        <!-- Задан несуществующий путь - это покажет ошибку -->
+        <li><a href="<?= Url::to(['/site/extra']) ?>">Что-то еще</a></li>
 
     </ul>
     <div class="color-medium" id="left-side__logout">
-        <a href="/?r=site/logout"><img src="/images/standby-20.png" width="20" height="20" title="выход" alt="выход"></a>
+        <a href="<?= Url::to(['@signout']) ?>"><img src="/images/standby-20.png" width="20" height="20" title="выход" alt="выход"></a>
     </div>
 </div>
 <div class="main">
