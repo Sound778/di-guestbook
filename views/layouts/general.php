@@ -36,6 +36,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     </div>
     <div class="color-medium" id="left-side__logged">
         <?php
+        // ссылки для проверки алиасов, ещё не настроены, покажут 404 ошибку
         echo (Yii::$app->user->isGuest)
         ? '<a href="' . Url::to(['@signin']) . '">Вход</a> / <a href="' . Url::to(['@signup']) . '">Регистрация</a>'
         : Yii::$app->user->identity->username;

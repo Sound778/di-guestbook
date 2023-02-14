@@ -35,13 +35,21 @@ class Message extends \yii\db\ActiveRecord
     {
         return [
             [['m_uid', 'm_status'], 'integer'],
-            [['m_uname', 'm_uemail', 'm_created_at', 'm_text'], 'required'],
+            ['m_uname', 'required', 'message' => 'Допустимые символы: цифры и буквы латинского алфавита'],
+            ['m_uemail', 'required', 'message' => 'Некорректный формат e-mail'],
+            ['m_text', 'required', 'message' => 'Сообщение не может быть пустым'],
+            [['m_created_at', 'm_uagent', 'm_uip'], 'required'],
             [['m_created_at'], 'safe'],
             [['m_text'], 'string'],
             [['m_uname'], 'string', 'max' => 32],
+            [['m_uname'], 'match', 'pattern' => '/^[1-9a-zA-Z\s]+$/'],
             [['m_uemail', 'm_uhomepage'], 'string', 'max' => 64],
             [['m_uagent'], 'string', 'max' => 255],
-            [['m_uip'], 'string', 'max' => 15],
+            [['m_uip'], 'string', 'max' => 15], // для IPv4
+            [['m_uemail'], 'email'],
+            [['m_uname', 'm_uemail', 'm_uhomepage', 'm_text'], 'trim'],
+            [['m_uhomepage'], 'url', 'defaultScheme' => 'http', 'message' => 'Некорректный формат URL'],
+            [['m_text'], 'filter', 'filter' => 'strip_tags'],
         ];
     }
 
@@ -51,16 +59,16 @@ class Message extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'm_id' => 'M ID',
-            'm_uname' => 'M Uname',
-            'm_uemail' => 'M Uemail',
-            'm_uid' => 'M Uid',
-            'm_uhomepage' => 'M Uhomepage',
-            'm_uagent' => 'M Uagent',
-            'm_uip' => 'M Uip',
-            'm_created_at' => 'M Created At',
-            'm_text' => 'M Text',
-            'm_status' => 'M Status',
+            'm_id' => 'Message id',
+            'm_uname' => 'Пользователь',
+            'm_uemail' => 'E-mail',
+            'm_uid' => 'User id',
+            'm_uhomepage' => 'Homepage',
+            'm_uagent' => 'UserAgent',
+            'm_uip' => 'User IP',
+            'm_created_at' => 'Дата создания',
+            'm_text' => 'Сообщение',
+            'm_status' => 'Статус сообщения',
         ];
     }
 }

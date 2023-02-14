@@ -12,6 +12,9 @@ use app\models\ContactForm;
 
 class SiteController extends Controller
 {
+
+    public $layout = 'general';
+
     /**
      * {@inheritdoc}
      */
@@ -43,8 +46,6 @@ class SiteController extends Controller
      */
     public function actions()
     {
-        $this->layout = 'general';
-
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
@@ -63,7 +64,6 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $this->layout = 'general';
         return $this->render('index');
     }
 

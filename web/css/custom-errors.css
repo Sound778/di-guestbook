@@ -1,0 +1,6 @@
+.has-error .form-control {
+    background-color: #e6e6fa;
+}
+.has-error .help-block {
+    color: red;
+}
