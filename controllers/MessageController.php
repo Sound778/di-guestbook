@@ -2,12 +2,13 @@
 
 namespace app\controllers;
 
+use Yii;
 use app\models\Message;
 use app\models\MessageSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\data\Pagination;
+//use yii\data\Pagination;
 
 /**
  * MessageController implements the CRUD actions for Message model.
@@ -78,6 +79,9 @@ class MessageController extends Controller
             $model->m_uagent = $_SERVER['HTTP_USER_AGENT'];
             $model->m_uip = $_SERVER['REMOTE_ADDR'];
             $model->m_created_at = strftime('%Y-%m-%d %T');
+            if (!Yii::$app->user->isGuest) {
+                $model->m_uid = Yii::$app->user->identity->id;
+            }
             if ($model->load($this->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'm_id' => $model->m_id]);
             }
