@@ -26,8 +26,10 @@ class LoginForm extends Model
     public function rules()
     {
         return [
-            [['username'], 'string',  'min' => 4, 'max' => 16],
-            [['password'], 'string',  'min' => 6, 'max' => 16],
+            [['username'], 'string',  'length' => [4, 16], 'tooShort' => 'Поле должно быть длиной не менее 4 символов',
+                'tooLong' => 'Поле должно быть длиной не более 16 символов'],
+            [['password'], 'string',  'length' => [6, 16], 'tooShort' => 'Поле должно быть длиной не менее 6 символов',
+                'tooLong' => 'Поле должно быть длиной не более 16 символов'],
             [['username', 'password'], 'required', 'message' => 'Поле не может быть пустым'],
             ['rememberMe', 'boolean'],
             ['password', 'validatePassword'],

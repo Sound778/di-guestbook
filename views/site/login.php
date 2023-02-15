@@ -7,7 +7,7 @@
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
 
-$this->title = 'Для зарегистрированных пользователей';
+$this->title = 'Вход для зарегистрированных пользователей';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-login">
@@ -24,7 +24,7 @@ $this->title = 'Для зарегистрированных пользовате
         ],
     ]); ?>
 
-        <?= $form->field($model, 'username')->textInput(['style'=>'width:300px', 'autofocus' => true]) ?>
+        <?= $form->field($model, 'username')->textInput(['style'=>'width:300px', 'autofocus' => true, 'maxlength' => true]) ?>
 
         <?= $form->field($model, 'password')->passwordInput(['style'=>'width:300px']) ?>
 

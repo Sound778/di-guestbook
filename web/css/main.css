@@ -156,9 +156,14 @@ body {
 }
 
 input[type="text"],
+input[type="password"],
 select,
 textarea {
     font-size: 1.4rem !important;
+}
+
+#message-verifycode {
+    max-width: 300px !important;
 }
 
 .dark {

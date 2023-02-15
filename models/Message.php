@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "message".
@@ -18,8 +19,10 @@ use Yii;
  * @property string $m_text
  * @property int $m_status
  */
-class Message extends \yii\db\ActiveRecord
+class Message extends ActiveRecord
 {
+    public $verifyCode;
+
     /**
      * {@inheritdoc}
      */
@@ -50,6 +53,7 @@ class Message extends \yii\db\ActiveRecord
             [['m_uname', 'm_uemail', 'm_uhomepage', 'm_text'], 'trim'],
             [['m_uhomepage'], 'url', 'defaultScheme' => 'http', 'message' => 'Некорректный формат URL'],
             [['m_text'], 'filter', 'filter' => 'strip_tags'],
+            ['verifyCode', 'captcha', 'message' => 'Введенный код не совпадает с кодом с картинки'],
         ];
     }
 
@@ -69,6 +73,7 @@ class Message extends \yii\db\ActiveRecord
             'm_created_at' => 'Дата создания',
             'm_text' => 'Сообщение',
             'm_status' => 'Статус сообщения',
+            'verifyCode' => 'Код с картинки',
         ];
     }
 }
