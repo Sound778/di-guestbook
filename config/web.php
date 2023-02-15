@@ -11,9 +11,9 @@ $config = [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
         '@messages' => '/message/index',
-        '@signin' => '/site/login',
-        '@signup' => '/site/register',
-        '@signout' => '/site/logout',
+        '@login' => '/site/login',
+        '@register' => '/site/signup',
+        '@logout' => '/site/logout',
     ],
     'components' => [
         'request' => [

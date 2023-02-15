@@ -26,12 +26,20 @@ class LoginForm extends Model
     public function rules()
     {
         return [
-            // username and password are both required
-            [['username', 'password'], 'required'],
-            // rememberMe must be a boolean value
+            [['username'], 'string',  'min' => 4, 'max' => 16],
+            [['password'], 'string',  'min' => 6, 'max' => 16],
+            [['username', 'password'], 'required', 'message' => 'Поле не может быть пустым'],
             ['rememberMe', 'boolean'],
-            // password is validated by validatePassword()
             ['password', 'validatePassword'],
+        ];
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'username' => 'Имя пользователя',
+            'password' => 'Пароль',
+            'rememberMe' => 'Запомнить меня',
         ];
     }
 
@@ -48,7 +56,7 @@ class LoginForm extends Model
             $user = $this->getUser();
 
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
+                $this->addError($attribute, 'Неверное имя пользователя или пароль.');
             }
         }
     }
@@ -57,13 +65,14 @@ class LoginForm extends Model
      * Logs in a user using the provided username and password.
      * @return bool whether the user is logged in successfully
      */
-    public function login()
+/*    public function login()
     {
         if ($this->validate()) {
             return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
         }
         return false;
     }
+*/
 
     /**
      * Finds user by [[username]]

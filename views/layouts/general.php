@@ -38,7 +38,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         <?php
         // ссылки для проверки алиасов, ещё не настроены, покажут 404 ошибку
         echo (Yii::$app->user->isGuest)
-        ? '<a href="' . Url::to(['@signin']) . '">Вход</a> / <a href="' . Url::to(['@signup']) . '">Регистрация</a>'
+        ? '<a href="' . Url::to(['@login']) . '">Вход</a> / <a href="' . Url::to(['@register']) . '">Регистрация</a>'
         : Yii::$app->user->identity->username;
         ?>
     </div>
@@ -49,7 +49,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 
     </ul>
     <div class="color-medium" id="left-side__logout">
-        <a href="<?= Url::to(['@signout']) ?>"><img src="/images/standby-20.png" width="20" height="20" title="выход" alt="выход"></a>
+        <a href="<?= Url::to(['@logout']) ?>"><img src="/images/standby-20.png" width="20" height="20" title="выход" alt="выход"></a>
     </div>
 </div>
 <div class="main">
