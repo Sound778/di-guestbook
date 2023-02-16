@@ -7,8 +7,9 @@ use app\models\Message;
 use app\models\MessageSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\UploadedFile;
 use yii\filters\VerbFilter;
-use yii\captcha\CaptchaAction;
+//use yii\captcha\CaptchaAction;
 //use yii\data\Pagination;
 
 /**
@@ -98,8 +99,12 @@ class MessageController extends Controller
             $model->m_created_at = strftime('%Y-%m-%d %T');
             if (!Yii::$app->user->isGuest) {
                 $model->m_uid = Yii::$app->user->identity->id;
+                $model->m_uname = Yii::$app->user->identity->username;
             }
             if ($model->load($this->request->post()) && $model->save()) {
+                $model->attachedFile = UploadedFile::getInstance($model, 'attachedFile');
+                $model->attachedFile->saveAs('uploads/' . $model->m_id . '_' . $this->getRandomFilename($model->attachedFile->baseName)
+                    .'.' . $model->attachedFile->extension);
                 return $this->redirect(['view', 'm_id' => $model->m_id]);
             }
         } else {
@@ -123,6 +128,9 @@ class MessageController extends Controller
         $model = $this->findModel($m_id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            $model->attachedFile = UploadedFile::getInstance($model, 'attachedFile');
+            $model->attachedFile->saveAs('uploads/' . $model->m_id . '_' . $this->getRandomFilename($model->attachedFile->baseName)
+                .'.' . $model->attachedFile->extension);
             return $this->redirect(['view', 'm_id' => $model->m_id]);
         }
 
@@ -159,5 +167,18 @@ class MessageController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+
+    /**
+     * Generates random string consisting of permitted chars
+     *
+     * @param string $filename filename without extension
+     * @return bool|string
+     */
+    public function getRandomFilename($filename)
+    {
+        $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
+        return substr(str_shuffle($permitted_chars), 0, 10);
     }
 }

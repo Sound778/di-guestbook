@@ -36,7 +36,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'm_uhomepage',
             'm_uagent',
             'm_uip',
-            'm_created_at',
+            [
+                'attribute' => 'm_created_at',
+                'value' => function ($model) {
+                    return date_format(date_create($model->m_created_at), 'd.m.Y H:i:s');
+                },
+            ],
             'm_text:ntext',
             'm_status',
         ],

@@ -22,6 +22,7 @@ use yii\db\ActiveRecord;
 class Message extends ActiveRecord
 {
     public $verifyCode;
+    public $attachedFile;
 
     /**
      * {@inheritdoc}
@@ -54,6 +55,8 @@ class Message extends ActiveRecord
             [['m_uhomepage'], 'url', 'defaultScheme' => 'http', 'message' => 'Некорректный формат URL'],
             [['m_text'], 'filter', 'filter' => 'strip_tags'],
             ['verifyCode', 'captcha', 'message' => 'Введенный код не совпадает с кодом с картинки'],
+            ['attachedFile', 'file', 'extensions' => ['png', 'jpg', 'gif'], 'maxSize' => 1024*1024],
+            ['attachedFile', 'image', 'extensions' => ['png', 'jpg', 'gif'], 'maxWidth' => 320, 'maxHeight' =>240],
         ];
     }
 
@@ -73,6 +76,7 @@ class Message extends ActiveRecord
             'm_created_at' => 'Дата создания',
             'm_text' => 'Сообщение',
             'm_status' => 'Статус сообщения',
+            'attachedFile' => 'Прикрепить файл',
             'verifyCode' => 'Код с картинки',
         ];
     }
