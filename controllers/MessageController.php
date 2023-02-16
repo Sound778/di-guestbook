@@ -20,6 +20,22 @@ use yii\helpers\FileHelper;
 class MessageController extends Controller
 {
     public $layout = 'general';
+    public $isGranted = false; //will be set to true if admin is logged in
+
+    /**
+     * MessageController constructor.
+     *
+     * Sets isGranted = true if admin is logged in
+     *
+     * @param $id
+     * @param $module
+     * @param array $config
+     */
+    public function __construct($id, $module, $config = [])
+    {
+        parent::__construct($id, $module, $config);
+        $this->isGranted = Yii::$app->user->identity->userrole == 'admin';
+    }
 
     /**
      * @inheritDoc
@@ -137,7 +153,7 @@ class MessageController extends Controller
             return $this->render('/site/error', [
                 'message' => 'Редактирование доступно зарегистрированным пользователям',
             ]);
-        } else if (Yii::$app->user->identity->id == $model->m_uid || Yii::$app->user->identity->userrole == 'admin') {
+        } else if (Yii::$app->user->identity->id == $model->m_uid || $this->isGranted) {
 
             if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
                 $model->attachedFile = UploadedFile::getInstance($model, 'attachedFile');
@@ -175,7 +191,7 @@ class MessageController extends Controller
             return $this->render('/site/error', [
                 'message' => 'Удаление доступно зарегистрированным пользователям',
             ]);
-        } else if (Yii::$app->user->identity->id == $model->m_uid || Yii::$app->user->identity->userrole == 'admin') {
+        } else if (Yii::$app->user->identity->id == $model->m_uid || $this->isGranted) {
             $model->delete();
             $path = 'uploads/';
             $files = FileHelper::findFiles($path, ['only' => [$model->m_id . '_*.*']]);
@@ -218,5 +234,39 @@ class MessageController extends Controller
     {
         $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
         return substr(str_shuffle($permitted_chars), 0, 10);
+    }
+
+    /**
+     * Deletes image from web/uploads folder
+     *
+     * @return string|\yii\web\Response
+     */
+    public function actionDeleteimage()
+    {
+        if(Yii::$app->user->isGuest) {
+            return 'Удаление доступно зарегистрированным пользователям';
+        }
+
+        $filename = explode('/', $this->request->post('image'));
+        $msgIndex = explode('_', end($filename));
+        current($msgIndex);
+        $model = $this->findModel(current($msgIndex));
+
+        if (Yii::$app->user->identity->id == $model->m_uid || $this->isGranted) {
+
+            if (Yii::$app->request->isAjax) {
+
+                if (file_exists($this->request->post('image'))) {
+                    unlink($this->request->post('image'));
+                    return '1';
+                } else {
+                    return 'File not found';
+                }
+            } else {
+                return $this->redirect(['view', 'm_id' => $model->m_id]);
+            }
+        } else {
+            return 'Вы можете удалять только свои прикрепленные файлы';
+        }
     }
 }

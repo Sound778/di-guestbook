@@ -55,17 +55,18 @@ $this->params['breadcrumbs'][] = $this->title;
     foreach ($files as $file) {
         $filename = explode('\\', $file);
         $link = str_replace('\\', '/', $file);
-        echo '<div class="image-link">' . end($filename) . '</div>';
+        echo '<div class="image-link" data-link="' . $link . '">' . end($filename) . '</div>';
     }
     ?>
 
 </div>
-<div class="upl">
-    <div class="upl__shell">
+<div class="upl" id="viewImageLayer">
+    <div class="upl__shell" id="viewImageLayerShell">
         <span class="uplshell__title">Просмотр изображения</span>
         <span class="uplshell__close-sign">[X]</span>
         <hr class="clear">
         <div class="pic-container"></div>
-        <div class="del-container"><span class="del-link">Удалить изображение</span></div>
+        <div class="del-container"></div>
+        <div class="response-container"></div>
     </div>
 </div>
