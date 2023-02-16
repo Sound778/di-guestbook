@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
 use yii\filters\VerbFilter;
+
 //use yii\captcha\CaptchaAction;
 //use yii\data\Pagination;
 
@@ -28,7 +29,7 @@ class MessageController extends Controller
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -103,8 +104,10 @@ class MessageController extends Controller
             }
             if ($model->load($this->request->post()) && $model->save()) {
                 $model->attachedFile = UploadedFile::getInstance($model, 'attachedFile');
-                $model->attachedFile->saveAs('uploads/' . $model->m_id . '_' . $this->getRandomFilename($model->attachedFile->baseName)
-                    .'.' . $model->attachedFile->extension);
+                if (!empty($model->attachedFile)) {
+                    $model->attachedFile->saveAs('uploads/' . $model->m_id . '_' . $this->getRandomFilename($model->attachedFile->baseName)
+                        . '.' . $model->attachedFile->extension);
+                }
                 return $this->redirect(['view', 'm_id' => $model->m_id]);
             }
         } else {
@@ -119,6 +122,8 @@ class MessageController extends Controller
     /**
      * Updates an existing Message model.
      * If update is successful, the browser will be redirected to the 'view' page.
+     * Update allowed for registered users.
+     * Users can update their own messages. Admin can update any message. 
      * @param int $m_id M ID
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
@@ -127,16 +132,29 @@ class MessageController extends Controller
     {
         $model = $this->findModel($m_id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            $model->attachedFile = UploadedFile::getInstance($model, 'attachedFile');
-            $model->attachedFile->saveAs('uploads/' . $model->m_id . '_' . $this->getRandomFilename($model->attachedFile->baseName)
-                .'.' . $model->attachedFile->extension);
-            return $this->redirect(['view', 'm_id' => $model->m_id]);
-        }
+        if (Yii::$app->user->isGuest) {
+            return $this->render('/site/error', [
+                'message' => 'Редактирование доступно зарегистрированным пользователям',
+            ]);
+        } else if (Yii::$app->user->identity->id == $model->m_uid || Yii::$app->user->identity->userrole == 'admin') {
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+            if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+                $model->attachedFile = UploadedFile::getInstance($model, 'attachedFile');
+                if (!empty($model->attachedFile)) {
+                    $model->attachedFile->saveAs('uploads/' . $model->m_id . '_' . $this->getRandomFilename($model->attachedFile->baseName)
+                        . '.' . $model->attachedFile->extension);
+                }
+                return $this->redirect(['view', 'm_id' => $model->m_id]);
+            }
+
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        } else {
+            return $this->render('/site/error', [
+                'message' => 'Вы можете редактировать только свои сообщения',
+            ]);
+        }
     }
 
     /**

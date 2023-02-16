@@ -55,7 +55,9 @@ class Message extends ActiveRecord
             [['m_uhomepage'], 'url', 'defaultScheme' => 'http', 'message' => 'Некорректный формат URL'],
             [['m_text'], 'filter', 'filter' => 'strip_tags'],
             ['verifyCode', 'captcha', 'message' => 'Введенный код не совпадает с кодом с картинки'],
-            ['attachedFile', 'file', 'extensions' => ['png', 'jpg', 'gif'], 'maxSize' => 1024*1024],
+//            ['attachedFile', 'file', 'extensions' => ['png', 'jpg', 'gif', 'txt']],
+//            ['attachedFile', 'file', 'extensions' => ['txt'], 'maxSize' => 100*1024],
+            ['attachedFile', 'image', 'extensions' => ['png', 'jpg', 'gif'], 'maxSize' => 1024*1024],
             ['attachedFile', 'image', 'extensions' => ['png', 'jpg', 'gif'], 'maxWidth' => 320, 'maxHeight' =>240],
         ];
     }
