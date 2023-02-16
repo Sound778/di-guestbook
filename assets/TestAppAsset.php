@@ -8,6 +8,7 @@
 namespace app\assets;
 
 use yii\web\AssetBundle;
+use yii\web\View;
 
 /**
  * Main application asset bundle.
@@ -24,6 +25,11 @@ class TestAppAsset extends AssetBundle
         'css/custom-errors.css'
     ];
     public $js = [
+        'js/main.js'
+    ];
+    public $jsOptions = [
+        // скрипты будут подключены в <head>
+        'position' => View::POS_END
     ];
     public $depends = [
         'yii\web\YiiAsset',

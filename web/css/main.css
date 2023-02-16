@@ -255,6 +255,15 @@ textarea {
     color: #f7f7f7;
 }
 
+.clear {
+    clear: both;
+}
+
+.image-link {
+    color: blue;
+    cursor:pointer;
+}
+
 .upl {
     position: fixed;
     left: 0;
@@ -268,7 +277,8 @@ textarea {
 .upl__shell {
     margin: 30px auto;
     padding: 10px;
-    width: 800px;
+    width: auto;
+    max-width: 400px;
     background-color: #eef1ff;
     #border: 1px solid #ccc;
     border-radius: 8px;
@@ -292,4 +302,8 @@ textarea {
 
 .uplshell__close-sign:hover {
     background-color: moccasin;
+}
+
+.upl__shell .pic-container {
+    width: auto;
 }

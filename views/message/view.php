@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\FileHelper;
 use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
@@ -47,4 +48,23 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
 
+    <?php
+    $path = 'uploads/';
+    $files = FileHelper::findFiles($path, ['only' => [$model->m_id . '_*.*']]);
+    echo '<b>Прикрепленные файлы</b><br>';
+    foreach ($files as $file) {
+        $filename = explode('\\', $file);
+        $link = str_replace('\\', '/', $file);
+        echo '<div class="image-link">' . end($filename) . '</div>';
+    }
+    ?>
+
+</div>
+<div class="upl">
+    <div class="upl__shell">
+        <span class="uplshell__title">Просмотр изображения</span>
+        <span class="uplshell__close-sign">[X]</span>
+        <hr class="clear">
+        <div class="pic-container"></div>
+    </div>
 </div>
