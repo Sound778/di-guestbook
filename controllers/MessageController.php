@@ -123,7 +123,7 @@ class MessageController extends Controller
      * Updates an existing Message model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * Update allowed for registered users.
-     * Users can update their own messages. Admin can update any message. 
+     * Users can update their own messages. Admin can update any message.
      * @param int $m_id M ID
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
