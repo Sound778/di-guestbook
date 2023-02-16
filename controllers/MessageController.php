@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
 use yii\filters\VerbFilter;
+use yii\helpers\FileHelper;
 
 //use yii\captcha\CaptchaAction;
 //use yii\data\Pagination;
@@ -160,15 +161,34 @@ class MessageController extends Controller
     /**
      * Deletes an existing Message model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
+     * Deleting allowed for registered users.
+     * Users can delete their own messages. Admin can delete any message.
      * @param int $m_id M ID
-     * @return \yii\web\Response
+     * @return \yii\web\Response|string
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($m_id)
     {
-        $this->findModel($m_id)->delete();
+        $model = $this->findModel($m_id);
 
-        return $this->redirect(['index']);
+        if (Yii::$app->user->isGuest) {
+            return $this->render('/site/error', [
+                'message' => 'Удаление доступно зарегистрированным пользователям',
+            ]);
+        } else if (Yii::$app->user->identity->id == $model->m_uid || Yii::$app->user->identity->userrole == 'admin') {
+            $model->delete();
+            $path = 'uploads/';
+            $files = FileHelper::findFiles($path, ['only' => [$model->m_id . '_*.*']]);
+            foreach ($files as $file) {
+                unlink($file);
+            }
+
+            return $this->redirect(['index']);
+        } else {
+            return $this->render('/site/error', [
+                'message' => 'Вы можете удалять только свои сообщения',
+            ]);
+        }
     }
 
     /**

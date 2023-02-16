@@ -66,5 +66,6 @@ $this->params['breadcrumbs'][] = $this->title;
         <span class="uplshell__close-sign">[X]</span>
         <hr class="clear">
         <div class="pic-container"></div>
+        <div class="del-container"><span class="del-link">Удалить изображение</span></div>
     </div>
 </div>
