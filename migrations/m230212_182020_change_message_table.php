@@ -13,7 +13,7 @@ class m230212_182020_change_message_table extends Migration
     public function safeUp()
     {
         $this->alterColumn('message', 'm_text', $this->text()->notNull());
-        $this->addColumn('message', 'm_uid', $this->integer()->unsigned()->notNull()->defaultValue(0)->after('m_uemail'));
+        $this->addColumn('message', 'm_uid', $this->integer()->unsigned()->defaultValue(0)->after('m_uemail'));
     }
 
     /**
@@ -21,16 +21,13 @@ class m230212_182020_change_message_table extends Migration
      */
     public function safeDown()
     {
-        /*
-        echo "m230212_182020_chanhe_message_table cannot be reverted.\n";
-
-        return false;
-        */
+        $this->alterColumn('message', 'm_text', $this->text()->null());
         $this->dropColumn('message', 'm_uid');
     }
 
     /*
     // Use up()/down() to run migration code without a transaction.
+
     public function up()
     {
 
@@ -38,9 +35,7 @@ class m230212_182020_change_message_table extends Migration
 
     public function down()
     {
-        echo "m230212_182020_chanhe_message_table cannot be reverted.\n";
 
-        return false;
     }
     */
 }
