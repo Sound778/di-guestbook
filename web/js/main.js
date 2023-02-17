@@ -30,7 +30,7 @@ function removeImage (imgSrc) {
                 $('#viewImageLayerShell .del-container span').text('');
                 $('#viewImageLayerShell .response-container').html('Файл удален');
                 $('[data-link="' + imgSrc + '"]').remove();
-                setTimeout(() => $('#viewImageLayer').hide('slow'), 500);
+                setTimeout(() => {$('#viewImageLayerShell .response-container').html(''); $('#viewImageLayer').hide('slow'); } , 500);
             } else {
                 $('#viewImageLayerShell .response-container').html(response);
             }
