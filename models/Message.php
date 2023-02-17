@@ -39,9 +39,9 @@ class Message extends ActiveRecord
     {
         return [
             [['m_uid', 'm_status'], 'integer'],
-            ['m_uname', 'required', 'message' => 'Допустимые символы: цифры и буквы латинского алфавита'],
-            ['m_uemail', 'required', 'message' => 'Некорректный формат e-mail'],
-            ['m_text', 'required', 'message' => 'Сообщение не может быть пустым'],
+            [['m_uname'], 'required', 'message' => 'Допустимые символы: цифры и буквы латинского алфавита'],
+            [['m_uemail'], 'required', 'message' => 'Некорректный формат e-mail'],
+            [['m_text'], 'required', 'message' => 'Сообщение не может быть пустым'],
             [['m_created_at', 'm_uagent', 'm_uip'], 'required'],
             [['m_created_at'], 'safe'],
             [['m_text'], 'string'],
@@ -54,11 +54,11 @@ class Message extends ActiveRecord
             [['m_uname', 'm_uemail', 'm_uhomepage', 'm_text'], 'trim'],
             [['m_uhomepage'], 'url', 'defaultScheme' => 'http', 'message' => 'Некорректный формат URL'],
             [['m_text'], 'filter', 'filter' => 'strip_tags'],
-            ['verifyCode', 'captcha', 'message' => 'Введенный код не совпадает с кодом с картинки'],
-//            ['attachedFile', 'file', 'extensions' => ['png', 'jpg', 'gif', 'txt'], 'maxSize' => 1024*1024],
-//            ['attachedFile', 'file', 'extensions' => ['txt'], 'maxSize' => 100*1024],
-            ['attachedFile', 'image', 'extensions' => ['png', 'jpg', 'gif'], 'maxSize' => 1024*1024],
-            ['attachedFile', 'image', 'extensions' => ['png', 'jpg', 'gif'], 'maxWidth' => 320, 'maxHeight' =>240],
+            [['verifyCode'], 'captcha', 'message' => 'Введенный код не совпадает с кодом с картинки'],
+//            [['attachedFile'], 'file', 'extensions' => ['png', 'jpg', 'gif', 'txt'], 'maxSize' => 1024*1024],
+//            [['attachedFile'], 'file', 'extensions' => ['txt'], 'maxSize' => 100*1024],
+            [['attachedFile'], 'image', 'extensions' => ['png', 'jpg', 'gif'], 'maxSize' => 1024 * 1024],
+            [['attachedFile'], 'image', 'extensions' => ['png', 'jpg', 'gif'], 'maxWidth' => 320, 'maxHeight' => 240],
         ];
     }
 
