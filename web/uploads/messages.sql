@@ -34,8 +34,8 @@ INSERT INTO `message` (`m_id`, `m_uname`, `m_uemail`, `m_uid`, `m_uhomepage`, `m
 (7, 'John', 'john@silver.com', 2, 'http://silver.com', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36', '127.0.0.1', '2023-02-15 17:12:05', 'This is my message. I\'m registererd as John )) edited', 1),
 (8, 'Boris', 'boris@boris.net', 0, '', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36', '127.0.0.1', '2023-02-15 20:16:19', 'dfgse ererhe', 1),
 (9, 'Mary Poppins', 'mary@poppins.org', 0, 'http://marypoppins.org', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36', '127.0.0.1', '2023-02-15 22:23:17', 'checking captcha', 1),
-(10, 'nick', 'nick@nick.ru', 1, '', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36', '127.0.0.1', '2023-02-16 00:22:10', 'uploadng picture', 1),
-(11, 'dfbfbf', 'fffns@dfgdfhgd.ty', 1, 'http://dgsdasgashh.yu', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36', '127.0.0.1', '2023-02-16 00:34:38', 'dfg rthrtherth ertueyjtetyje', 1);
+(10, 'nick', 'nick@nick.ru', 0, '', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36', '127.0.0.1', '2023-02-16 00:22:10', 'uploadng picture', 1),
+(11, 'dfbfbf', 'fffns@dfgdfhgd.ty', 0, 'http://dgsdasgashh.yu', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36', '127.0.0.1', '2023-02-16 00:34:38', 'dfg rthrtherth ertueyjtetyje', 1);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
