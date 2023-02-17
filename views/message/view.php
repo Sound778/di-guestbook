@@ -55,7 +55,16 @@ $this->params['breadcrumbs'][] = $this->title;
     foreach ($files as $file) {
         $filename = explode('\\', $file);
         $link = str_replace('\\', '/', $file);
+
+        //выводим ссылки для просмотра картинок
         echo '<div class="image-link" data-link="' . $link . '">' . end($filename) . '</div>';
+
+        /*$extension = strrchr(end($filename), '.');
+        if ($extension == '.txt') {
+            echo '<div class="file-link" href="' . $link . '">' . end($filename) . '</div>';
+        } else {
+            echo '<div class="image-link" data-link="' . $link . '">' . end($filename) . '</div>';
+        }*/
     }
     ?>
 

@@ -158,6 +158,26 @@ class MessageController extends Controller
             if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
                 $model->attachedFile = UploadedFile::getInstance($model, 'attachedFile');
                 if (!empty($model->attachedFile)) {
+                    // проверяем размеры у картинки
+                    /*switch ($model->attachedFile->type) {
+                        case 'text/plain':
+                            if ($model->attachedFile->size > 100*1024) {
+                                print_r('размер текстового файла превышает 100 kb');
+                                exit();
+                            }
+                            break;
+                        case 'image/gif':
+                        case 'image/jpeg':
+                        case 'image/png':
+                            list($imageWidth, $imageHeight) = getimagesize($model->attachedFile->tempName);
+                            if ($imageWidth > 320 || $imageHeight > 240) {
+                                print_r('размер текстового файла превышает 100 kb');
+                                exit();
+                            }
+                            exit();
+                            break;
+
+                    }*/
                     $model->attachedFile->saveAs('uploads/' . $model->m_id . '_' . $this->getRandomFilename($model->attachedFile->baseName)
                         . '.' . $model->attachedFile->extension);
                 }
