@@ -24,8 +24,13 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['logout'],
+                'only' => ['login', 'logout', 'signup'],
                 'rules' => [
+                    [
+                        'actions' => ['login', 'signup'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
                     [
                         'actions' => ['logout'],
                         'allow' => true,
@@ -106,7 +111,7 @@ class SiteController extends Controller
         $model = new LoginForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $loggedIn =  Yii::$app->user->login($model->getUser(), $model->rememberMe ? 3600*24*30 : 0);
+            $loggedIn = Yii::$app->user->login($model->getUser(), $model->rememberMe ? 3600 * 24 * 30 : 0);
         }
 
         return ($loggedIn) ? $this->goHome() : $this->render('login', ['model' => $model]);

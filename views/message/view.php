@@ -6,6 +6,7 @@ use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
 /** @var app\models\Message $model */
+/** @var array $images */
 
 $this->title = $model->m_id;
 $this->params['breadcrumbs'][] = ['label' => 'Messages', 'url' => ['index']];
@@ -21,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Удалить запись', ['delete', 'm_id' => $model->m_id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Вы уверены, что хотите удалить это сообщение?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -49,22 +50,12 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
 
     <?php
-    $path = 'uploads/';
-    $files = FileHelper::findFiles($path, ['only' => [$model->m_id . '_*.*']]);
     echo '<b>Прикрепленные файлы</b><br>';
-    foreach ($files as $file) {
-        $filename = explode('\\', $file);
-        $link = str_replace('\\', '/', $file);
-
-        //выводим ссылки для просмотра картинок
-        echo '<div class="image-link" data-link="' . $link . '">' . end($filename) . '</div>';
-
-        /*$extension = strrchr(end($filename), '.');
-        if ($extension == '.txt') {
-            echo '<div class="file-link" href="' . $link . '">' . end($filename) . '</div>';
-        } else {
-            echo '<div class="image-link" data-link="' . $link . '">' . end($filename) . '</div>';
-        }*/
+    if(!empty($images)) {
+        foreach ($images as $image) {
+            //выводим ссылки для просмотра картинок
+            echo '<div class="image-link" data-link="' . $image['link'] . '">' . $image['name'] . '</div>';
+        }
     }
     ?>
 

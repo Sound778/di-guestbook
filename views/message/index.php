@@ -10,6 +10,7 @@ use yii\widgets\LinkPager;
 /** @var yii\web\View $this */
 /** @var app\models\MessageSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
+/** @var yii\data\Pagination|false $pagination */
 
 $this->title = 'Список сообщений';
 $this->params['breadcrumbs'][] = $this->title;

@@ -5,6 +5,7 @@ use yii\helpers\FileHelper;
 
 /** @var yii\web\View $this */
 /** @var app\models\Message $model */
+/** @var array $images */
 
 $this->title = 'Редактор сообщения: #' . $model->m_id;
 $this->params['breadcrumbs'][] = ['label' => 'Messages', 'url' => ['index']];
@@ -22,13 +23,12 @@ $this->params['breadcrumbs'][] = 'Update';
 </div>
 
 <?php
-$path = 'uploads/';
-$files = FileHelper::findFiles($path, ['only' => [$model->m_id . '_*.*']]);
 echo '<b>Прикрепленные файлы</b><br>';
-foreach ($files as $file) {
-    $filename = explode('\\', $file);
-    $link = str_replace('\\', '/', $file);
-    echo '<div class="image-link" data-link="' . $link . '">' . end($filename) . '</div>';
+if(!empty($images)) {
+    foreach ($images as $image) {
+        //выводим ссылки для просмотра картинок
+        echo '<div class="image-link" data-link="' . $image['link'] . '">' . $image['name'] . '</div>';
+    }
 }
 ?>
 

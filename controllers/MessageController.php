@@ -99,6 +99,7 @@ class MessageController extends Controller
     {
         return $this->render('view', [
             'model' => $this->findModel($m_id),
+            'images' => $this->getAttachedImages($m_id),
         ]);
     }
 
@@ -122,7 +123,7 @@ class MessageController extends Controller
             if ($model->load($this->request->post()) && $model->save()) {
                 $model->attachedFile = UploadedFile::getInstance($model, 'attachedFile');
                 if (!empty($model->attachedFile)) {
-                    $model->attachedFile->saveAs('uploads/' . $model->m_id . '_' . $this->getRandomFilename($model->attachedFile->baseName)
+                    $model->attachedFile->saveAs('uploads/' . $model->m_id . '_' . Yii::$app->security->generateRandomString(10)
                         . '.' . $model->attachedFile->extension);
                 }
                 return $this->redirect(['view', 'm_id' => $model->m_id]);
@@ -158,26 +159,6 @@ class MessageController extends Controller
             if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
                 $model->attachedFile = UploadedFile::getInstance($model, 'attachedFile');
                 if (!empty($model->attachedFile)) {
-                    // проверяем размеры у картинки
-                    /*switch ($model->attachedFile->type) {
-                        case 'text/plain':
-                            if ($model->attachedFile->size > 100*1024) {
-                                print_r('размер текстового файла превышает 100 kb');
-                                exit();
-                            }
-                            break;
-                        case 'image/gif':
-                        case 'image/jpeg':
-                        case 'image/png':
-                            list($imageWidth, $imageHeight) = getimagesize($model->attachedFile->tempName);
-                            if ($imageWidth > 320 || $imageHeight > 240) {
-                                print_r('размер текстового файла превышает 100 kb');
-                                exit();
-                            }
-                            exit();
-                            break;
-
-                    }*/
                     $model->attachedFile->saveAs('uploads/' . $model->m_id . '_' . Yii::$app->security->generateRandomString(10)
                         . '.' . $model->attachedFile->extension);
                 }
@@ -186,6 +167,7 @@ class MessageController extends Controller
 
             return $this->render('update', [
                 'model' => $model,
+                'images' => $this->getAttachedImages($m_id),
             ]);
         } else {
             return $this->render('/site/error', [
@@ -213,6 +195,7 @@ class MessageController extends Controller
             ]);
         } else if (Yii::$app->user->identity->id == $model->m_uid || $this->isGranted) {
             $model->delete();
+
             $path = 'uploads/';
             $files = FileHelper::findFiles($path, ['only' => [$model->m_id . '_*.*']]);
             foreach ($files as $file) {
@@ -243,17 +226,26 @@ class MessageController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-
     /**
-     * Generates random string consisting of permitted chars
+     * Finds images attached to the message
      *
-     * @param string $filename filename without extension
-     * @return bool|string
+     * @param int $m_id Message id
+     * @return array
      */
-    public function getRandomFilename($filename)
+    public function getAttachedImages($m_id)
     {
-        $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
-        return substr(str_shuffle($permitted_chars), 0, 10);
+        $path = 'uploads/';
+        $files = FileHelper::findFiles($path, ['only' => [$m_id . '_*.*']]);
+        $imageArr = [];
+
+        foreach ($files as $file) {
+            $filename = explode('\\', $file);
+            $link = str_replace('\\', '/', $file);
+            $imageArr[] = ['link' => $link, 'name' => end($filename)];
+        }
+
+        return $imageArr;
+
     }
 
     /**

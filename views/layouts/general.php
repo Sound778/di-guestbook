@@ -49,7 +49,11 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 
     </ul>
     <div class="color-medium" id="left-side__logout">
-        <a href="<?= Url::to(['@logout']) ?>"><img src="/images/standby-20.png" width="20" height="20" title="выход" alt="выход"></a>
+        <?php
+        if (!Yii::$app->user->isGuest) {
+            echo '<a href = "' . Url::to(['@logout']) . '" ><img src = "/images/standby-20.png" width = "20" height = "20" title = "выход" alt = "выход" ></a>';
+        }
+        ?>
     </div>
 </div>
 <div class="main">

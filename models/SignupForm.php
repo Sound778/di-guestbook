@@ -10,12 +10,19 @@ namespace app\models;
 
 use yii\base\Model;
 
+/**
+ * SignupForm is the model behind the signup form.
+ */
+
 class SignupForm extends Model
 {
 
     public $username;
     public $password;
 
+    /**
+     * @return array the validation rules
+     */
     public function rules()
     {
         return [
@@ -27,6 +34,9 @@ class SignupForm extends Model
         ];
     }
 
+    /**
+     * @return array customized attribute labels
+     */
     public function attributeLabels()
     {
         return [

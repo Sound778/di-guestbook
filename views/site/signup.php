@@ -1,9 +1,15 @@
 <?php
 
+/** @var yii\web\View $this */
+/** @var yii\bootstrap5\ActiveForm $form */
+/** @var app\models\SignupForm $model */
+
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
+
+$this->title = 'Регистрация пользователя';
 ?>
-<h1>Регистрация пользователя</h1>
+<h1><?= Html::encode($this->title) ?></h1>
 
 <?php $form = ActiveForm::begin() ?>
 <?= $form->field($model, 'username')->textInput(['style'=>'width:300px', 'maxlength' => true]) ?>
