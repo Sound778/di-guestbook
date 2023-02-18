@@ -178,7 +178,7 @@ class MessageController extends Controller
                             break;
 
                     }*/
-                    $model->attachedFile->saveAs('uploads/' . $model->m_id . '_' . $this->getRandomFilename($model->attachedFile->baseName)
+                    $model->attachedFile->saveAs('uploads/' . $model->m_id . '_' . Yii::$app->security->generateRandomString(10)
                         . '.' . $model->attachedFile->extension);
                 }
                 return $this->redirect(['view', 'm_id' => $model->m_id]);
@@ -269,7 +269,7 @@ class MessageController extends Controller
 
         $filename = explode('/', $this->request->post('image'));
         $msgIndex = explode('_', end($filename));
-        current($msgIndex);
+        reset($msgIndex);
         $model = $this->findModel(current($msgIndex));
 
         if (Yii::$app->user->identity->id == $model->m_uid || $this->isGranted) {

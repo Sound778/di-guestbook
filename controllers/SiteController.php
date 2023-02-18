@@ -80,10 +80,10 @@ class SiteController extends Controller
         }
 
         $model = new SignupForm();
-        if ($model->load(\Yii::$app->request->post()) && $model->validate()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $user = new User();
             $user->username = $model->username;
-            $user->password = \Yii::$app->security->generatePasswordHash($model->password);
+            $user->password = Yii::$app->security->generatePasswordHash($model->password);
             if ($user->save()) {
                 return $this->goHome();
             }
@@ -105,7 +105,7 @@ class SiteController extends Controller
 
         $model = new LoginForm();
 
-        if ($model->load(\Yii::$app->request->post()) && $model->validate()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $loggedIn =  Yii::$app->user->login($model->getUser(), $model->rememberMe ? 3600*24*30 : 0);
         }
 

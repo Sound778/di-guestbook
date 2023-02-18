@@ -16,12 +16,12 @@ class m230212_165319_create_message_table extends Migration
 
         $this->createTable('{{%message}}', [
             'm_id' => $this->primaryKey(),
-            'm_uname' => $this->string(32)->notNull(),
-            'm_uemail' => $this->string(64)->notNull(),
+            'm_uname' => $this->string(32),
+            'm_uemail' => $this->string(64),
             'm_uhomepage' => $this->string(64),
-            'm_uagent' => $this->string(255)->notNull(),
-            'm_uip' => $this->string(15)->notNull(),
-            'm_created_at' => $this->dateTime()->notNull(),
+            'm_uagent' => $this->string(255),
+            'm_uip' => $this->string(15),
+            'm_created_at' => $this->dateTime(),
             'm_text' => $this->text(),
             'm_status' => $this->tinyInteger()->defaultValue(1),
         ], $tableOptions);
